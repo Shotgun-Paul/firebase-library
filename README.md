@@ -1,4 +1,4 @@
-# # Firebase-library texts
+# # Firebase-library tests
 
 This repository is a personal project for studying Selenium.
 It contains a set of tests for the resource http://library-app.firebaseapp.com
