@@ -11,31 +11,33 @@ chai.use(chaiAsPromised);
 // Here comes the Mocha
 
 describe('Home page scenarios', function () {
+    this.timeout(100000);
+
+    this.beforeAll(async function (){ 
+        page = new Page();
+    })
+
+    this.afterAll(async function (){
+        // await page.driver.sleep(3000);
+        await page.quit();
+    })
 
     beforeEach(async function () {
-        page = new Page();
-        await page.driver.manage().window().maximize();
         page.visit('http://library-app.firebaseapp.com');
-        
         await page.driver;
     });
 
     afterEach(async function () {
-        // await page.driver.sleep(3000);
-        await page.quit();
+        await page.driver.sleep(3000);
     });
 
     it('Email format check', async function () {
-        this.timeout(10000);
-
         var btn = await page.requestBtn();
         btn.opacity.should.equal('1');
         btn.state.should.be.true;
     });
 
     it('Getting fake Id', async function () {
-        this.timeout(10000);
-
         var alert = await page.alertSuccess();
         alert.should.contain("Thank you!");
 
@@ -47,8 +49,6 @@ describe('Home page scenarios', function () {
     });
 
     it('Navbar elements check', async function () {
-        this.timeout(10000);
-
         var result = await page.navBarCheck();
         var expectedResult = ['Home', 'Libraries', 'Authors', 'Books', 'About', 'Contact', 'Admin'];
         JSON.stringify(result).should.equal(JSON.stringify(expectedResult));
